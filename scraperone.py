@@ -14,15 +14,30 @@ if req.status_code == 200:
 
     
     for response in h2_elements:
-        element = response.find_all('div', class_='jet-listing-dynamic-field__content')
+        div_elements = response.find_all('div', class_='jet-listing-dynamic-field__content')
         # listingArr = []        
-        print(element)
+        # print(element)
                    
-        
+        price = div_elements[0].get_text().strip() if len(div_elements) > 0 else None
+        unknown = div_elements[1].get_text().strip() if len(div_elements) > 1 else None        
+        unknown2 = div_elements[2].get_text().strip() if len(div_elements) > 2 else None        
+        category = div_elements[3].get_text().strip() if len(div_elements) > 3 else None
+        description = div_elements[4].get_text().strip() if len(div_elements) > 4 else None
+
+        record = {
+        "Price": price,
+        "unknown": unknown,       
+        "unknown2": unknown2,       
+        "Category": category,
+        "Description": description,
+        }
+
+        records.append(record)
+    print("Data", records)
 
         # for elem in element:            
         #     title = elem.get_text().strip() 
-            # print(title)
+        #     print(title)
             
         #     record = {
         #         "Element": title

@@ -18,7 +18,7 @@ for response in responses:
 
     for titles, ratings, reviews, tags, imgsrcs, data in zip(getTitles, getRatings, getReviews, getTags, getImgSrc, getData):
         title = titles.get_text().strip()
-        review = reviews.get_text().strip()
+        review = reviews.get_text().strip("()")
         rating = ratings.span.get_text()
         tag = tags.get_text().strip()
         imgSrc = imgsrcs.img['data-src']
