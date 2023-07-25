@@ -1,55 +1,21 @@
 import requests
 from bs4 import BeautifulSoup
-# req = requests.get("https://aitoptools.com/tool/creasquare/")
-req = requests.get('https://aitoptools.com/')
 
-records = []
+baseUrl = "https://aitoptools.com/"
+headers = {
+    'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+}
 
-if req.status_code == 200:
-    soup = BeautifulSoup(req.content, 'html.parser')
-    h2_elements = soup.find_all('div', class_="jet-listing")    
+r = requests.get("https://aitoptools.com/")
+soup = BeautifulSoup(r.content, 'html.parser')
 
-    # for h2_element in h2_elements:
-    #     print(h2_element.get_text())
+toollist = soup.find_all('div', class_="elementor elementor-43")
 
+toollink = []
+
+for tool in toollist:
+    for link in tool.find_all('a', href=True):
+        toollink.append(link['href'])
+    print(link['href'])
     
-    for response in h2_elements:
-        div_elements = response.find_all('div', class_='jet-listing-dynamic-field__content')
-        # listingArr = []        
-        # print(element)
-                   
-        price = div_elements[0].get_text().strip() if len(div_elements) > 0 else None
-        unknown = div_elements[1].get_text().strip() if len(div_elements) > 1 else None        
-        unknown2 = div_elements[2].get_text().strip() if len(div_elements) > 2 else None        
-        category = div_elements[3].get_text().strip() if len(div_elements) > 3 else None
-        description = div_elements[4].get_text().strip() if len(div_elements) > 4 else None
 
-        record = {
-        "Price": price,
-        "unknown": unknown,       
-        "unknown2": unknown2,       
-        "Category": category,
-        "Description": description,
-        }
-
-        records.append(record)
-    print("Data", records)
-
-        # for elem in element:            
-        #     title = elem.get_text().strip() 
-        #     print(title)
-            
-        #     record = {
-        #         "Element": title
-        #     }
-        
-
-        #     records.append(record)            
-            
-        # print(records)      
-
-# for record in records:
-#     print(record)
-
-else:
-    print("Failed to retrieve the page. Status code: ", req.status_code)
