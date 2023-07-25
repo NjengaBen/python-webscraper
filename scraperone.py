@@ -14,8 +14,9 @@ toollist = soup.find_all('div', class_="elementor elementor-43")
 toollink = []
 
 for tool in toollist:
-    for link in tool.find_all('a', href=True):
-        toollink.append(link['href'])
-    print(link['href'])
+    for links in tool.find_all('h2', class_="elementor-heading-title elementor-size-default"):
+        link = links.text.strip()       
+        toollink.append(baseUrl+link)
+print(toollink)
     
 
