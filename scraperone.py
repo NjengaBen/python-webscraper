@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 from bs4 import BeautifulSoup
 
 baseUrl = "https://aitoptools.com/"
@@ -11,6 +12,7 @@ soup = BeautifulSoup(r.content, 'html.parser')
 
 toollist = soup.find_all('div', class_="elementor elementor-43")
 
+wholelist=[]
 toollink = []
 toollink1=[]
 
@@ -56,4 +58,10 @@ for url in toollink1:
         "Misc":misc_dict
     }
 
-    print(data)
+    # print(data)
+    wholelist.append(data)
+# print(wholelist)
+
+df = pd.DataFrame(wholelist)
+print(df.head(10))
+
